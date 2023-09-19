@@ -1,6 +1,33 @@
 var express = require('express');
 var router = express.Router();
 
+const MENU = [
+  {
+    id: 1,
+    title: '4 fromages',
+    content: 'Gruyère, Sérac, Appenzel, Gorgonzola, Tomates',
+  },
+  {
+    id: 2,
+    title: 'Vegan',
+    content: 'Tomates, Courgettes, Oignons, Aubergines, Poivrons',
+  },
+  {
+    id: 3,
+    title: 'Vegetarian',
+    content: 'Mozarella, Tomates, Oignons, Poivrons, Champignons, Olives',
+  },
+  {
+    id: 4,
+    title: 'Alpage',
+    content: 'Gruyère, Mozarella, Lardons, Tomates',
+  },
+  {
+    id: 5,
+    title: 'Diable',
+    content: 'Tomates, Mozarella, Chorizo piquant, Jalapenos',
+  },
+];
 // Read the pizza identified by an id in the menu
 router.get('/:id', (req, res) => {
     console.log(`GET /pizzas/${req.params.id}`);
@@ -11,5 +38,46 @@ router.get('/:id', (req, res) => {
   
     res.json(MENU[indexOfPizzaFound]);
   });
+
+  /* Read all the pizzas from the menu
+   GET /pizzas?order=title : ascending order by title
+   GET /pizzas?order=-title : descending order by title
+*/
+router.get('/', (req, res, next) => {
+  const orderByTitle =
+    req?.query?.order?.includes('title')
+      ? req.query.order
+      : undefined;
+  let orderedMenu;
+  console.log(`order by ${orderByTitle ?? 'not requested'}`);
+  if (orderByTitle)
+    orderedMenu = [...MENU].sort((a, b) => a.title.localeCompare(b.title));
+  if (orderByTitle === '-title') orderedMenu = orderedMenu.reverse();
+
+  console.log('GET /pizzas');
+  res.json(orderedMenu ?? MENU);
+});
+
+//create a pizza to add in MENU
+router.post('/', (req, res) => {
+  const title = req?.body?.title?.lenght !== 0 ? req.body.title : undefined ;
+  const content = req?.body?.content?.lenght !== 0 ? req.body.content : undefined;
+
+  console.log('POST /pizzas');
+
+  const LastItemIndex = MENU?.lenght !== 0 ? MENU.length - 1 : 0;
+  const lastId = LastItemIndex !== undefined ? MENU[LastItemIndex]?.id : 0;
+  const nextId = lastId +1;
+
+  const newPizza = {
+    id : nextId,
+    title : title,
+    content : content,
+  };
+
+  MENU.push(newPizza);
+
+  res.json(newPizza);
+});
 
 module.exports = router;
