@@ -28,10 +28,7 @@ const films = [
     ];
 
 router.get('/', (req, res, next)=> {
-    if(req.path){
-        compt = compt+1;
-    }
-    console.log('GET /films'+ ' : ' + compt);
+
     res.json(films);
 });
 
