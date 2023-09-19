@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-var compt = 0;
-
 const films = [
     {
         id: 1,
@@ -28,7 +26,6 @@ const films = [
     ];
 
 router.get('/', (req, res, next)=> {
-
     res.json(films);
 });
 
