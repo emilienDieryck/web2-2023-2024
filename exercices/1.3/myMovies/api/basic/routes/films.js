@@ -27,8 +27,8 @@ const films = [
 
 router.get('/', (req, res) => {
     const orderByDuration = req?.query 
-    ? Number(req.query['minimun-duration']) 
-    : undefined;
+        ? Number(req.query['minimum-duration']) 
+        : undefined;
     console.log('minimun duration : ' + orderByDuration);
 
     if(typeof orderByDuration !== 'number' || orderByDuration <= 0)
