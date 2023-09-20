@@ -40,4 +40,44 @@ router.get('/', (req, res) => {
     return res.json(filmsfilter);
 });
 
+router.get('/:id', (req, res) => {
+    console.log(`GET /films/${req.params.id}`);
+
+    const idIndexFilms = films.findIndex((film) => film.id == req.params.id);
+
+    if(idIndexFilms < 0) res.sendStatus(404);
+
+    res.json(films[idIndexFilms]);
+});
+
+router.post('/', (req, res) => {
+    const title = req?.body?.title?.lenght !== 0 ? req.body.title : undefined;
+    const duration = req?.body?.duration ? Number(req.body.duration) : undefined;
+    const budget = req?.body?.budget ? Number(req.body.budget) : undefined;
+    const link = req?.body?.link?.lenght !== 0 ? req.body.link : undefined;
+
+    if(typeof duration !== 'number' || duration <= 0) 
+        return res.sendStatus(404);
+
+    if(typeof budget !== 'nummber' || budget <= 0)
+        return res.sendStatus(404);
+
+    const LastItemIndex = films?.lenght !== 0 ? films.length - 1 : 0;
+    const lastId = LastItemIndex !== undefined ? films[LastItemIndex]?.id : 0;
+    const nextId = lastId +1;
+
+    const newFilm = {
+        id: nextId,
+        title: title,
+        duration: duration,
+        budget: budget,
+        link: link,
+    };
+
+    films.push(newFilm);
+
+    res.json(newFilm)
+
+})
+
 module.exports = router;
