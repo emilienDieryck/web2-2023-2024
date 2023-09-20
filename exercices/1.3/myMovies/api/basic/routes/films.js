@@ -50,22 +50,27 @@ router.get('/:id', (req, res) => {
     res.json(films[idIndexFilms]);
 });
 
+// add a new film
 router.post('/', (req, res) => {
     const title = req?.body?.title?.lenght !== 0 ? req.body.title : undefined;
     const duration = req?.body?.duration ? Number(req.body.duration) : undefined;
     const budget = req?.body?.budget ? Number(req.body.budget) : undefined;
     const link = req?.body?.link?.lenght !== 0 ? req.body.link : undefined;
 
+    console.log('title : ' + title);
+    console.log('duration : ' + duration);
+    console.log('budget : ' + budget);
+    console.log('link : ' + link);
     if(typeof duration !== 'number' || duration <= 0) 
         return res.sendStatus(404);
-
-    if(typeof budget !== 'nummber' || budget <= 0)
+    
+    if(typeof budget !== 'number' || budget <= 0)
         return res.sendStatus(404);
-
+    
     const LastItemIndex = films?.lenght !== 0 ? films.length - 1 : 0;
     const lastId = LastItemIndex !== undefined ? films[LastItemIndex]?.id : 0;
     const nextId = lastId +1;
-
+    console.log('next id is : ' + nextId);
     const newFilm = {
         id: nextId,
         title: title,
@@ -73,7 +78,7 @@ router.post('/', (req, res) => {
         budget: budget,
         link: link,
     };
-
+    
     films.push(newFilm);
 
     res.json(newFilm)
