@@ -37,19 +37,19 @@ router.get('/', (req, res) => {
 
     if(!orderByDuration && orderByTitle){
         if(typeof orderByTitle !== 'string' || orderByTitle <= 0){
-           return res.sendStatus(400); 
+           return res.json('wrong title'); 
         }
         const filmsfilterTitle = films.filter((film) => film.title.startsWith(orderByTitle));
         return res.json(filmsfilterTitle);
     }
     if(!orderByTitle && orderByDuration){
         if(typeof orderByDuration !== 'number' || orderByDuration <= 0){
-            return res.sendStatus(400);
+            return res.json('wrong minimun duration');
         }
         const filmsfilter = films.filter((film) => film.duration >= orderByDuration);
         return res.json(filmsfilter);
     }
-    res.json(films).sendStatus(200);
+    res.json(films)
 });
 
 router.get('/:id', (req, res) => {
