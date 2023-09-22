@@ -96,4 +96,21 @@ router.post('/', (req, res) => {
     res.json(newFilm)
 });
 
+router.delete('/:id', (req, res) => {
+    console.log(`DELETE /films/${req.params.id}`);
+  
+    const foundIndex = films.findIndex(film => film.id == req.params.id);
+  
+    if (foundIndex < 0) return res.sendStatus(404);
+  
+    const itemsRemovedFromFilm = films.splice(foundIndex, 1);
+    const itemRemoved = itemsRemovedFromFilm[0];
+  
+    res.json(itemRemoved);
+  });
+
+router.patch('/:id' , (req, res) => {
+
+});
+
 module.exports = router;
