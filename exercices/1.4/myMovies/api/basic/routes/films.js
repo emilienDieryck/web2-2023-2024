@@ -35,20 +35,21 @@ router.get('/', (req, res) => {
         : undefined;
     console.log('title : ' + orderByTitle);
 
-    if(!orderByDuration) return res.json(films);
-    if(typeof orderByTitle !== 'string' || orderByTitle <= 0)
-        return res.json('wrong title');
-
-    if(!orderByTitle) return res.json(films);
-    if(typeof orderByDuration !== 'number' || orderByDuration <= 0)
-        return res.json('wrong minimun duration');
-    
-    if(orderByTitle && !orderByDuration){
-        const filmsfilter = films.filter((film) => film.title.startsWith(orderByTitle));
+    if(!orderByDuration && orderByTitle){
+        if(typeof orderByTitle !== 'string' || orderByTitle <= 0){
+           return res.json('wrong title'); 
+        }
+        const filmsfilterTitle = films.filter((film) => film.title.startsWith(orderByTitle));
+        return res.json(filmsfilterTitle);
+    }
+    if(!orderByTitle && orderByDuration){
+        if(typeof orderByDuration !== 'number' || orderByDuration <= 0){
+            return res.json('wrong minimun duration');
+        }
+        const filmsfilter = films.filter((film) => film.duration >= orderByDuration);
         return res.json(filmsfilter);
     }
-    const filmsfilter = films.filter((film) => film.duration >= orderByDuration);
-    return res.json(filmsfilter);
+    res.json(films)
 });
 
 router.get('/:id', (req, res) => {
