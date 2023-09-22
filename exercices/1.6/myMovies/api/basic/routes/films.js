@@ -109,8 +109,32 @@ router.delete('/:id', (req, res) => {
     res.json(itemRemoved);
   });
 
-router.patch('/:id' , (req, res) => {
 
-});
+router.patch('/:id', (req, res) => {
+    console.log(`PATCH /films/${req.params.id}`);
+  
+    const title = req?.body?.title;
+    const duration = req?.body?.duration;
+    const budget = req?.body?.budget;
+    const link = req?.body?.link;
+  
+    if ((!title && !link) || title?.length === 0 || link?.length === 0) return res.sendStatus(400);
+    if ((!duration && budget) || typeof duration !== 'number' || typeof budget !== 'number') return res.sendStatus(400);
+  
+    const foundIndex = films.findIndex(film => film.id == req.params.id);
+  
+    if (foundIndex < 0) return res.sendStatus(404);
+  
+    const updatedFilm = {...films[foundIndex], ...req.body};
+  
+    films[foundIndex] = updatedFilm;
+  
+    res.json(updatedFilm);
+  });
+
+router.put('/:id', (req, res) => {
+    console.log(`PUT /films/${req.params.id}`);
+
+})
 
 module.exports = router;
