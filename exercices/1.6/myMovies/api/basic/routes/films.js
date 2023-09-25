@@ -18,7 +18,7 @@ const films = [
     },
     {
         id: 3,
-        title: "'A Haunting in Venice' (2023)",
+        title: "A Haunting in Venice (2023)",
         duration: 190,
         budget: 675000,
         link: 'https://www.imdb.com/title/tt29081468/?ref_=vp_vi_tt',
@@ -112,11 +112,11 @@ router.delete('/:id', (req, res) => {
 
 router.patch('/:id', (req, res) => {
     console.log(`PATCH /films/${req.params.id}`);
-  
-    const title = req?.body?.title;
-    const duration = req?.body?.duration;
-    const budget = req?.body?.budget;
-    const link = req?.body?.link;
+    
+    const title = req?.body?.title?.lenght !== 0 ? req.body.title : undefined;
+    const duration = req?.body?.duration ? Number(req.body.duration) : undefined;
+    const budget = req?.body?.budget ? Number(req.body.budget) : undefined;
+    const link = req?.body?.link?.lenght !== 0 ? req.body.link : undefined;
   
     if ((!title && !link) || title?.length === 0 || link?.length === 0) return res.sendStatus(400);
     if ((!duration && budget) || typeof duration !== 'number' || typeof budget !== 'number') return res.sendStatus(400);
@@ -132,9 +132,41 @@ router.patch('/:id', (req, res) => {
     res.json(updatedFilm);
   });
 
-router.put('/:id', (req, res) => {
+
+router.put('/:id' , (req, res) => {
     console.log(`PUT /films/${req.params.id}`);
 
-})
+    const title = req?.body?.title;
+    const duration = req?.body?.duration;
+    const budget = req?.body?.budget;
+    const link = req?.body?.link;
+  
+    if ((!title && !link) || title?.length === 0 || link?.length === 0) return res.sendStatus(400);
+    if ((!duration && budget) || typeof duration !== 'number' || typeof budget !== 'number') return res.sendStatus(400);
+  
+    const foundIndex = films.findIndex(film => film.id == req.params.id);
+
+    if(foundIndex < 0){
+        const newFilm = {
+            id: req.params.id,
+            title: title,
+            duration: duration,
+            budget: budget,
+            link: link,
+        };
+    
+    films.push(newFilm);
+
+    return res.json(newFilm)
+    };
+
+    const updatedFilm = {...films[foundIndex], ...req.body};
+    films[foundIndex] = updatedFilm;
+
+    return res.json(updatedFilm);
+    
+});
+
+
 
 module.exports = router;

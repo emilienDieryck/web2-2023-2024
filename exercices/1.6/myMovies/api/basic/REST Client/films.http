@@ -38,3 +38,15 @@ Content-Type: application/json
     "budget": 450,
     "link": "https://www.imdb.com/title/tt5537002/?ref_=vp_vi_tt"
 }
+
+### UPDATE 1 element of a films or create one if not exist
+
+PUT {{baseUrl}}/films/3
+Content-Type: application/json
+
+{
+    "title": "A Haunting in Venice (2023)",
+    "duration": 100,
+    "budget": 234,
+    "link": "https://www.imdb.com/title/tt29081468/?ref_=vp_vi_tt"
+}
