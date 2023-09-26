@@ -29,3 +29,6 @@ Content-Type: application/json
 {
     "title":"Magic Green 2"
 }
+
+### Delete all pizza
+DELETE {{baseUrl}}/pizzas
