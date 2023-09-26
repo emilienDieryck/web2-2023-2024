@@ -1,0 +1,52 @@
+### Read all films with File variable
+@baseUrl = http://localhost:3000
+GET {{baseUrl}}/films
+
+
+### Read all films sorted by minumum-duration 
+GET {{baseUrl}}/films?minimum-duration=190
+
+### Read a films filtered by his id
+GET {{baseUrl}}/films/2
+
+### Create a films
+POST {{baseUrl}}/films
+Content-Type: application/json
+
+{
+    "title":"Magic Green film",
+    "duration": 219,
+    "budget": 150,
+    "link": "https://www.imdb.com/title/tt29081468/?ref_=vp_vi_tt"
+}
+
+
+### Read a films filtered by his id with a wrong id
+GET {{baseUrl}}/films/8
+
+
+### Delete film identified by 2
+DELETE {{baseUrl}}/films/2
+
+### Update the film identified by 3
+PATCH {{baseUrl}}/films/3
+Content-Type: application/json
+
+{
+    "title":"Magic Green 2",
+    "duration": 100,
+    "budget": 450,
+    "link": "https://www.imdb.com/title/tt5537002/?ref_=vp_vi_tt"
+}
+
+### UPDATE 1 element of a films or create one if not exist
+
+PUT {{baseUrl}}/films/3
+Content-Type: application/json
+
+{
+    "title": "A Haunting in Venice (2023)",
+    "duration": 100,
+    "budget": 234,
+    "link": "https://www.imdb.com/title/tt29081468/?ref_=vp_vi_tt"
+}
