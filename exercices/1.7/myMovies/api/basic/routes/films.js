@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const {serialize, parse } = require('../utils/json');
+const { serialize, parse } = require('../utils/json');
 
 const jsonDbPath = __dirname + '/../data/films.json';
 
@@ -105,6 +105,8 @@ router.post('/', (req, res) => {
     
     films.push(newFilm);
 
+    serialize(jsonDbPath, films);
+
     res.json(newFilm)
 });
 
@@ -119,6 +121,8 @@ router.delete('/:id', (req, res) => {
   
     const itemsRemovedFromFilm = films.splice(foundIndex, 1);
     const itemRemoved = itemsRemovedFromFilm[0];
+
+    serialize(jsonDbPath, films);
   
     res.json(itemRemoved);
   });
@@ -144,6 +148,8 @@ router.patch('/:id', (req, res) => {
     const updatedFilm = {...films[foundIndex], ...req.body};
   
     films[foundIndex] = updatedFilm;
+
+    serialize(jsonDbPath, films);
   
     res.json(updatedFilm);
   });
@@ -175,11 +181,15 @@ router.put('/:id' , (req, res) => {
     
     films.push(newFilm);
 
+    serialize(jsonDbPath, films);
+
     return res.json(newFilm);
     };
 
     const updatedFilm = {...films[foundIndex], ...req.body};
     films[foundIndex] = updatedFilm;
+
+    serialize(jsonDbPath, films);
 
     return res.json(updatedFilm);
     
