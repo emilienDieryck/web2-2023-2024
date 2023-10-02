@@ -135,20 +135,5 @@ router.patch('/:id', (req, res) => {
   return res.json(updatedPizza);
 });
 
-router.delete('/' , (req, res) => {
-	console.log('DELETE /pizzas');
-
-	const pizzas = parse(jsonDbPath, MENU);
-
-	for (const i in pizzas) {
-		if (Object.hasOwnProperty.call(pizzas, i)) {
-			pizzas.splice(i, 1);
-		}
-	}
-	serialize(jsonDbPath, pizzas);
-
-	return res.json(pizzas);
-
-})
 
 module.exports = router;
