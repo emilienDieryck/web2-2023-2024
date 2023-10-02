@@ -57,7 +57,7 @@ router.get('/', (req, res) => {
         const filmsfilter = films.filter((film) => film.duration >= orderByDuration);
         return res.json(filmsfilter ?? films);
     }
-    res.json(films);
+    return res.json(films);
 });
 
 router.get('/:id', (req, res) => {
@@ -108,7 +108,7 @@ router.post('/', (req, res) => {
 
     serialize(jsonDbPath, films);
 
-    res.json(newFilm)
+    return res.json(newFilm)
 });
 
 router.delete('/:id', (req, res) => {
@@ -125,7 +125,7 @@ router.delete('/:id', (req, res) => {
 
     serialize(jsonDbPath, films);
   
-    res.json(itemRemoved);
+    return res.json(itemRemoved);
   });
 
 
@@ -152,7 +152,7 @@ router.patch('/:id', (req, res) => {
 
     serialize(jsonDbPath, films);
   
-    res.json(updatedFilm);
+    return res.json(updatedFilm);
   });
 
 
@@ -169,7 +169,7 @@ router.put('/:id' , (req, res) => {
     if ((!title && !link) || title?.length === 0 || link?.length === 0) return res.sendStatus(400);
     if ((!duration && budget) || typeof duration !== 'number' || typeof budget !== 'number') return res.sendStatus(400);
   
-    const foundIndex = films.findIndex(film => film.id == req.params.id);
+    const foundIndex = films.findIndex(film => film.id === req.params.id);
 
     if(foundIndex < 0){
         const newFilm = {
