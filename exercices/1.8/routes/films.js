@@ -65,7 +65,7 @@ router.get('/:id', (req, res) => {
     
     const films = parse(jsonDbPath, FILM);
 
-    const idIndexFilms = films.findIndex((film) => film.id == req.params.id);
+    const idIndexFilms = films.findIndex((film) => film.id === req.params.id);
 
     if(idIndexFilms < 0) res.sendStatus(404);
 
@@ -116,7 +116,7 @@ router.delete('/:id', (req, res) => {
 
     const films = parse(jsonDbPath, FILM); 
   
-    const foundIndex = films.findIndex(film => film.id == req.params.id);
+    const foundIndex = films.findIndex(film => film.id === req.params.id);
   
     if (foundIndex < 0) return res.sendStatus(404);
   
@@ -142,7 +142,7 @@ router.patch('/:id', (req, res) => {
     if ((!title && !link) || title?.length === 0 || link?.length === 0) return res.sendStatus(400);
     if ((!duration && budget) || typeof duration !== 'number' || typeof budget !== 'number') return res.sendStatus(400);
   
-    const foundIndex = films.findIndex(film => film.id == req.params.id);
+    const foundIndex = films.findIndex(film => film.id === req.params.id);
   
     if (foundIndex < 0) return res.sendStatus(404);
   
