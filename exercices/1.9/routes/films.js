@@ -35,15 +35,14 @@ router.delete('/:id', (req, res) => {
     console.log(`DELETE /films/${req.params.id}`);
     const deletedFilm = deleteFilm(req.params.id);
 
-  if (!deletedFilm) return res.sendStatus(404);
+    if (!deletedFilm) return res.sendStatus(404);
 
-  return res.json(deletedFilm);
+    return res.json(deletedFilm);
   });
 
 
 router.patch('/:id', (req, res) => {
     console.log(`PATCH /films/${req.params.id}`);
-    
     const title = req?.body?.title?.lenght !== 0 ? req.body.title : undefined;
     const duration = req?.body?.duration ? Number(req.body.duration) : undefined;
     const budget = req?.body?.budget ? Number(req.body.budget) : undefined;
