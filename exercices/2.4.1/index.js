@@ -24,12 +24,3 @@ function btnClick(){
     message.textContent = `You win ! You clicked 10 times within ${delayInMiliSeconds} ms`;
   }
 }
-
-function startTimeOut() {
-    timeoutID = setTimeout(() => {
-    }, delayInMiliSeconds);
-}
-  
-function clearAlert() {
-  clearTimeout(timeoutID);
-}
